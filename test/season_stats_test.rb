@@ -21,4 +21,9 @@ class SeasonStatsTest < Minitest::Test
     }
     assert_equal expected, @season_stats.results_by_opponents(16)
   end
+
+  def test_it_can_report_head_to_head_results
+    expected = {14=>0.83, 19=>0.83}
+    assert_equal expected, @season_stats.head_to_head_ids(16)
+  end
 end
