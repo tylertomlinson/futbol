@@ -18,11 +18,11 @@ class GameTeamsStatsTest < Minitest::Test
   end
 
   def test_it_can_get_total_wins_per_team
-    assert_equal 25, @game_teams_stats.total_wins_per_team
+    assert_equal 0, @game_teams_stats.total_wins_per_team(18)
   end
 
   def test_it_can_get_a_teams_average_win_percentage
-    assert_equal 6.25, @game_teams_stats.average_win_percentage(20)
+    assert_equal 0.0, @game_teams_stats.average_win_percentage(20)
   end
 
   def test_it_can_find_win_percentage_of_a_team
@@ -88,5 +88,13 @@ class GameTeamsStatsTest < Minitest::Test
   def test_it_can_find_teams_with_worst_fans
     expected = [16, 14, 5, 28, 26, 19]
     assert_equal expected, @game_teams_stats.worst_fans_ids
+  end
+
+  def test_most_goals_score_by_team_in_a_single_game
+    assert_equal 4, @game_teams_stats.most_goals_scored(5)
+  end
+
+  def test_fewest_goals_score_by_team_in_a_single_game
+    assert_equal 2, @game_teams_stats.fewest_goals_scored(5)
   end
 end
