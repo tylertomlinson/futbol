@@ -93,7 +93,7 @@ class GameCollection
     end.difference_between_score
     games_difference
   end
-  
+
   def find_away_defense_goals(away_team_id)
     away_defense = @games.find_all {|game| game.away_team_id == (away_team_id)}
 
@@ -135,4 +135,5 @@ class GameCollection
   def best_defense
     find_defensive_averages.min_by{|team, average| average}[0]
   end
+
 end
