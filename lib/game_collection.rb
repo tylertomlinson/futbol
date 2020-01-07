@@ -136,4 +136,27 @@ class GameCollection
     find_defensive_averages.min_by{|team, average| average}[0]
   end
 
+  def find_away_type_wins(away_team_id,type)
+    away_games = @games.find_all {|game| game.away_team_id == away_team_id && game.type == type}
+    require "pry"; binding.pry
+	  away_games.find_all {|game| game.away_goals > game.home_goals}.length
+  end
+
+  def find_home_type_wins(home_team_id,type)
+    home_games = @games.find_all {|game| game.home_team_id == home_team_id && game.type == type}
+    # require "pry"; binding.pry
+	  home_games.find_all {|game| game.home_goals > game.away_goals}.length
+  end
+
+  def games_by_season_and_type(season, type)
+    game_lists_by_season[season]
+
+
+
+  # type_season_games = game_lists_by_season
+  #   type_season_games.each do |key, value|
+  #     season_games[key] = value.length
+  #   end
+  #   season_games
+  # end
 end

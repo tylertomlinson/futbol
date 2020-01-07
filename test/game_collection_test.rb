@@ -91,4 +91,16 @@ class GameCollectionTest < Minitest::Test
   def test_it_can_get_worst_defense
     assert_equal 20, @game_collection.worst_defense
   end
+
+  def test_it_can_find_away_postseason_wins
+    assert_equal 6, @game_collection.find_away_type_wins(16, "Postseason")
+  end
+
+  def test_it_can_find_home_postseason_wins
+    assert_equal 4, @game_collection.find_home_type_wins(16, "Postseason")
+  end
+
+  def test_it_can_find_total_postseason_games
+    assert_equal 6, @game_collection.games_by_season_and_type("20132014", "Postseason")
+  end
 end

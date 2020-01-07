@@ -1,5 +1,5 @@
 class Game
-  attr_reader :season, :away_goals, :home_goals, :home_team_id, :away_team_id, :game_id
+  attr_reader :season, :away_goals, :home_goals, :home_team_id, :away_team_id, :game_id, :type
 
   def initialize(game_info)
     @season = game_info[:season]
@@ -8,6 +8,7 @@ class Game
     @home_team_id = game_info[:home_team_id].to_i
     @away_team_id = game_info[:away_team_id].to_i
     @game_id = game_info[:game_id]
+    @type = game_info[:type]
   end
 
   def total_score
