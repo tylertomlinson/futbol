@@ -10,6 +10,7 @@ class GameCollection
 
   def initialize(file_path)
     @games = create_games(file_path)
+    @teams = nil
   end
 
   def create_games(file_path)
@@ -133,7 +134,7 @@ class GameCollection
   end
 
   def teams
-    @games.reduce([]) do |teams,game|
+    @teams = @games.reduce([]) do |teams,game|
       teams << game.home_team_id
       teams
     end.uniq
@@ -152,6 +153,10 @@ class GameCollection
 
   def best_defense
     find_defensive_averages.min_by{|team, average| average}[0]
+  end
+
+  def make_team_ids
+
   end
 
   def find_away_type_wins(away_team_id, season, type)
@@ -182,8 +187,18 @@ class GameCollection
     find_win_percentage_by_type(team_id, season, "Regular Season") - find_win_percentage_by_type(team_id, season, "Postseason")
   end
 
+  def make_teams_by_win_percentage_difference(season)
+    teams
+
+    @teams.reduce({}) do |acc, team|
+      acc[team] = find_difference_in_win_percentage_by_type(team, season)
+      acc
+    end
+
+  end
+
   def find_biggest_bust(season)
-    game_hash_from_array_by_attribute(array, :season)[season]
+
   end
 
   def find_biggest_suprise(season)
