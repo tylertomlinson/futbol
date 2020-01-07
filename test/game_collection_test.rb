@@ -109,7 +109,7 @@ class GameCollectionTest < Minitest::Test
     require "pry"; binding.pry
   end
 
-  def test_universal_hash_maker_works
-    season1 
+  def test_it_can_find_biggest_bust
+    
   end
 end

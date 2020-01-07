@@ -43,21 +43,21 @@ class GameCollection
     end
   end
 
-  def game_hash_from_array_by_attribute(array, attribute)
-    array.reduce({}) do |hash, array_object|
-      hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
-      hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
-			hash
-		end
-  end
-
-  def game_hash_from_hash_by_attribute(hash, key, attribute)
-    hash[key].reduce({}) do |hash, array_object|
-      hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
-      hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
-			hash
-		end
-  end
+  # def game_hash_from_array_by_attribute(array, attribute)
+  #   array.reduce({}) do |hash, array_object|
+  #     hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
+  #     hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
+	# 		hash
+	# 	end
+  # end
+  #
+  # def game_hash_from_hash_by_attribute(hash, key, attribute)
+  #   hash[key].reduce({}) do |hash, array_object|
+  #     hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
+  #     hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
+	# 		hash
+	# 	end
+  # end
 
   def games_by_season
     season_games = game_lists_by_season
@@ -183,7 +183,7 @@ class GameCollection
   end
 
   def find_biggest_bust(season)
-    game_lists_by_season[season]
+    game_hash_from_array_by_attribute(array, :season)[season]
   end
 
   def find_biggest_suprise(season)
