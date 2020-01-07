@@ -100,6 +100,10 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_it_can_find_biggest_bust
-    @total_game_stats.make_teams_by_win_percentage_difference("20132014")
+    assert_equal 21, @total_game_stats.find_biggest_bust("20132014")
+  end
+
+  def test_it_can_find_biggest_surprise
+    assert_equal 26, @total_game_stats.find_biggest_surprise("20132014")
   end
 end
