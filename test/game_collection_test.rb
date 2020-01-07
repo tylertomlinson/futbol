@@ -6,6 +6,7 @@ class GameCollectionTest < Minitest::Test
   def setup
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game = @game_collection.games.first
+    @total_game_collection = GameCollection.new("./data/games.csv")
   end
 
   def test_it_exists
@@ -106,10 +107,11 @@ class GameCollectionTest < Minitest::Test
 
   def test_it_can_find_win_percentage_of_a_team_by_type
     assert_equal 0.83, @game_collection.find_win_percentage_by_type(16, "20132014", "Postseason")
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 
   def test_it_can_find_biggest_bust
-    
+    @total_game_collection.make_teams_by_win_percentage_difference("20132014")
+    require "pry"; binding.pry
   end
 end

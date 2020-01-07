@@ -44,22 +44,6 @@ class GameCollection
     end
   end
 
-  # def game_hash_from_array_by_attribute(array, attribute)
-  #   array.reduce({}) do |hash, array_object|
-  #     hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
-  #     hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
-	# 		hash
-	# 	end
-  # end
-  #
-  # def game_hash_from_hash_by_attribute(hash, key, attribute)
-  #   hash[key].reduce({}) do |hash, array_object|
-  #     hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
-  #     hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
-	# 		hash
-	# 	end
-  # end
-
   def games_by_season
     season_games = game_lists_by_season
     season_games.each do |key, value|
@@ -155,10 +139,6 @@ class GameCollection
     find_defensive_averages.min_by{|team, average| average}[0]
   end
 
-  def make_team_ids
-
-  end
-
   def find_away_type_wins(away_team_id, season, type)
     away_games = game_lists_by_season[season].find_all {|game| game.away_team_id == away_team_id && game.type == type && game.season == season}
     # require "pry"; binding.pry
@@ -190,18 +170,25 @@ class GameCollection
   def make_teams_by_win_percentage_difference(season)
     teams
 
-    @teams.reduce({}) do |acc, team|
+    all_teams = @teams.reduce({}) do |acc, team|
       acc[team] = find_difference_in_win_percentage_by_type(team, season)
       acc
     end
 
+# require "pry"; binding.pry
+
+    all_teams.each do |team_id, difference|
+      all_teams.delete(team_id) if difference.nan? == true
+      # require "pry"; binding.pry
+    end
+    all_teams
   end
 
   def find_biggest_bust(season)
-
+    make_teams_by_win_percentage_difference(season).max_by {|team_id, difference| difference}[0]
   end
 
-  def find_biggest_suprise(season)
-
+  def find_biggest_surprise(season)
+    make_teams_by_win_percentage_difference(season).min_by {|team_id, difference| difference}[0]
   end
 end
