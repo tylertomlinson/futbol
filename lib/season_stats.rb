@@ -13,4 +13,13 @@ class SeasonStats
       acc
     end
   end
+
+  def head_to_head_ids(team_id)
+    results_by_opponents_hash = results_by_opponents(team_id)
+    results_by_opponents_hash.reduce({}) do |acc, results|
+      win_count = results[1].count {|result| result == "WIN"}
+      acc[results[0]] = (win_count.to_f / results_by_opponents_hash[results[0]].length).round(2)
+      acc
+    end
+  end
 end
