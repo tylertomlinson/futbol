@@ -1,8 +1,10 @@
 require_relative "game"
 require_relative "csv_loadable"
+require_relative "createable"
 
 class GameCollection
   include CsvLoadable
+  include Createable
 
   attr_reader :games
 
@@ -39,6 +41,22 @@ class GameCollection
       hash[game.season] = [game] if hash[game.season].nil?
       hash
     end
+  end
+
+  def game_hash_from_array_by_attribute(array, attribute)
+    array.reduce({}) do |hash, array_object|
+      hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
+      hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
+			hash
+		end
+  end
+
+  def game_hash_from_hash_by_attribute(hash, key, attribute)
+    hash[key].reduce({}) do |hash, array_object|
+      hash[array_object.send(attribute)] = [array_object] if hash[array_object.send(attribute)].nil?
+      hash[array_object.send(attribute)] << array_object if hash[array_object.send(attribute)]
+			hash
+		end
   end
 
   def games_by_season
@@ -136,27 +154,39 @@ class GameCollection
     find_defensive_averages.min_by{|team, average| average}[0]
   end
 
-  def find_away_type_wins(away_team_id,type)
-    away_games = @games.find_all {|game| game.away_team_id == away_team_id && game.type == type}
+  def find_away_type_wins(away_team_id, season, type)
+    away_games = game_lists_by_season[season].find_all {|game| game.away_team_id == away_team_id && game.type == type && game.season == season}
     # require "pry"; binding.pry
 	  away_games.find_all {|game| game.away_goals > game.home_goals}.length
   end
 
-  def find_home_type_wins(home_team_id,type)
-    home_games = @games.find_all {|game| game.home_team_id == home_team_id && game.type == type}
+  def find_home_type_wins(home_team_id, season, type)
+    home_games = game_lists_by_season[season].find_all {|game| game.home_team_id == home_team_id && game.type == type && game.season == season}
     # require "pry"; binding.pry
 	  home_games.find_all {|game| game.home_goals > game.away_goals}.length
   end
 
-  def games_by_season_and_type(season, type)
+  def games_by_season_team_and_type(team_id, season, type)
+    away_games = game_lists_by_season[season].find_all {|game| game.type == type && game.away_team_id == team_id}.length
+
+    home_games = game_lists_by_season[season].find_all {|game| game.type == type && game.home_team_id == team_id}.length
+
+    away_games + home_games
+  end
+
+  def find_win_percentage_by_type(team_id, season, type)
+    ((find_away_type_wins(team_id, season, type) + find_home_type_wins(team_id, season, type)) / games_by_season_team_and_type(team_id, season, type).to_f).round(2)
+  end
+
+  def find_difference_in_win_percentage_by_type(team_id, season)
+    find_win_percentage_by_type(team_id, season, "Regular Season") - find_win_percentage_by_type(team_id, season, "Postseason")
+  end
+
+  def find_biggest_bust(season)
     game_lists_by_season[season]
+  end
 
+  def find_biggest_suprise(season)
 
-
-  # type_season_games = game_lists_by_season
-  #   type_season_games.each do |key, value|
-  #     season_games[key] = value.length
-  #   end
-  #   season_games
   end
 end

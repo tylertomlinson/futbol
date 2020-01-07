@@ -93,14 +93,23 @@ class GameCollectionTest < Minitest::Test
   end
 
   def test_it_can_find_away_postseason_wins
-    assert_equal 6, @game_collection.find_away_type_wins(16, "Postseason")
+    assert_equal 3, @game_collection.find_away_type_wins(16,"20132014", "Postseason")
   end
 
   def test_it_can_find_home_postseason_wins
-    assert_equal 4, @game_collection.find_home_type_wins(16, "Postseason")
+    assert_equal 2, @game_collection.find_home_type_wins(16, "20132014", "Postseason")
   end
 
   def test_it_can_find_total_postseason_games
-    assert_equal 6, @game_collection.games_by_season_and_type("20132014", "Postseason")
+    assert_equal 6, @game_collection.games_by_season_team_and_type(16, "20132014", "Postseason")
+  end
+
+  def test_it_can_find_win_percentage_of_a_team_by_type
+    assert_equal 0.83, @game_collection.find_win_percentage_by_type(16, "20132014", "Postseason")
+    require "pry"; binding.pry
+  end
+
+  def test_universal_hash_maker_works
+    season1 
   end
 end
