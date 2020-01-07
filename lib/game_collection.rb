@@ -138,7 +138,7 @@ class GameCollection
 
   def find_away_type_wins(away_team_id,type)
     away_games = @games.find_all {|game| game.away_team_id == away_team_id && game.type == type}
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
 	  away_games.find_all {|game| game.away_goals > game.home_goals}.length
   end
 
@@ -158,5 +158,5 @@ class GameCollection
   #     season_games[key] = value.length
   #   end
   #   season_games
-  # end
+  end
 end
