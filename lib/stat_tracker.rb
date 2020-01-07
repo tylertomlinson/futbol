@@ -106,4 +106,19 @@ class StatTracker
   def worst_fans
     @game_teams.worst_fans_ids.map {|id| @team_collection.team_name_by_id(id)}
   end
+
+  def most_goals_scored(team_id)
+    @game_teams.most_goals_scored(team_id.to_s)
+  end
+
+  def fewest_goals_scored(team_id)
+    @game_teams.fewest_goals_scored(team_id.to_s)
+  end
+
+  def average_win_percentage(team_id)
+    @game_teams.average_win_percentage(team_id.to_s).round(2)
+  end
+
+
+
 end
