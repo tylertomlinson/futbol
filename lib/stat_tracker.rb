@@ -3,6 +3,7 @@ require_relative 'game_teams_collection'
 require_relative 'game_stats'
 require_relative 'game_teams_stats'
 require_relative 'team_collection'
+require_relative 'season_stats'
 
 class StatTracker
   attr_reader :game_path, :game_teams_path
@@ -16,11 +17,12 @@ class StatTracker
   end
 
   def initialize(game_path, game_teams_path, teams_path)
-    game_teams_collection = GameTeamsCollection.new(game_teams_path)
+    @game_teams_collection = GameTeamsCollection.new(game_teams_path)
     @game_collection = GameCollection.new(game_path)
-    @game_teams = GameTeamsStats.new(game_teams_collection)
+    @game_teams = GameTeamsStats.new(@game_teams_collection)
     @games = GameStats.new(@game_collection)
     @team_collection = TeamCollection.new(teams_path)
+    @season_stats = SeasonStats.new(@game_collection, @game_teams_collection)
   end
 
   def highest_total_score
@@ -105,5 +107,13 @@ class StatTracker
 
   def worst_fans
     @game_teams.worst_fans_ids.map {|id| @team_collection.team_name_by_id(id)}
+  end
+
+  def head_to_head(team_id)
+    id_hash = @season_stats.head_to_head_ids(team_id.to_i)
+    id_hash.reduce({}) do |acc, id_rate_pair|
+      acc[@team_collection.team_name_by_id(id_rate_pair[0])] = id_rate_pair[1]
+      acc
+    end
   end
 end
