@@ -20,4 +20,9 @@ class Game
     difference_between_score = @away_goals - @home_goals
     difference_between_score.abs
   end
+
+  def opponent_id(team_id)
+    return home_team_id if team_id != home_team_id
+    return away_team_id
+  end
 end
