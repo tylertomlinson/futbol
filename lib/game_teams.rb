@@ -9,5 +9,4 @@ class GameTeams
     @team_id = game_teams_info[:team_id].to_i
     @goals = game_teams_info[:goals]
   end
-
 end
