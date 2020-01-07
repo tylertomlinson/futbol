@@ -13,4 +13,12 @@ class SeasonStatsTest < Minitest::Test
   def test_it_exists
     assert_instance_of SeasonStats, @season_stats
   end
+
+  def test_it_can_find_results_by_opponent
+    expected = {
+      14=>["WIN", "WIN", "LOSS", "WIN", "WIN", "WIN"],
+      19=>["WIN", "WIN", "WIN", "LOSS", "WIN", "WIN"]
+    }
+    assert_equal expected, @season_stats.results_by_opponents(16)
+  end
 end
