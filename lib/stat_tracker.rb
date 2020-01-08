@@ -126,18 +126,26 @@ class StatTracker
   end
 
   def average_win_percentage(team_id)
-    @game_teams.average_win_percentage(team_id.to_s).round(2)
+    @game_teams.average_win_percentage(team_id.to_s)
   end
 
   def biggest_team_blowout(team_id)
-    @season_stats.difference_between_wins(team_id.to_i).max
+    @season_stats.biggest_team_blowout(team_id.to_i)
   end
 
   def worst_loss(team_id)
-    @season_stats.difference_between_losses(team_id.to_i).max
+    @season_stats.worst_loss(team_id.to_i)
   end
 
   def team_info(team_id)
     @team_collection.team_info(team_id.to_i)
+  end
+
+  def biggest_bust(season)
+    @team_collection.team_name_by_id(@games.find_biggest_bust(season))
+  end
+
+  def biggest_surprise(season)
+    @team_collection.team_name_by_id(@games.find_biggest_surprise(season))
   end
 end

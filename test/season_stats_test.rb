@@ -26,7 +26,7 @@ class SeasonStatsTest < Minitest::Test
     expected = {14=>0.83, 19=>0.83}
     assert_equal expected, @season_stats.head_to_head_ids(16)
   end
-  
+
   def test_can_get_game_score_differentials
     assert_equal [1, 1, 1, 2], @season_stats.game_score_differentials(20, "LOSS")
   end
@@ -38,4 +38,8 @@ class SeasonStatsTest < Minitest::Test
   def test_can_get_worst_team_loss
     assert_equal 2, @season_stats.worst_loss(20)
   end
+
+  # def test_it_can_make_season_game_teams_array
+  #   assert_equal [], @game_collection.make_season_game_array("20132014")
+  # end
 end

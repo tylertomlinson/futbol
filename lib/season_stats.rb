@@ -1,11 +1,14 @@
 require_relative 'game_collection'
 require_relative 'game_teams_collection'
+require_relative 'createable'
 
 class SeasonStats
+  include Createable
 
   def initialize(game_collection, game_teams_collection)
     @game_collection = game_collection
     @game_teams_collection = game_teams_collection
+    @season_game_teams_array = nil
   end
 
   def results_by_opponents(team_id)
@@ -41,4 +44,12 @@ class SeasonStats
   def worst_loss(team_id)
     game_score_differentials(team_id, "LOSS").max
   end
+
+  # def make_season_game_array(season)
+  #   season_game_array = @game_collection.game_hash_from_array_by_attribute(@game_collection.games, :season)[season]
+  #   @season_game_teams_array = season_game_array.reduce([]) do |acc, game|
+  #     @game_teams_collection.each {|game_team| acc << game_team if game_team.game_id == game.game_id}
+  #     acc
+  #   end
+  # end
 end

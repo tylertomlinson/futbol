@@ -1,13 +1,16 @@
 require_relative "game"
 require_relative "csv_loadable"
+require_relative "createable"
 
 class GameCollection
   include CsvLoadable
+  include Createable
 
   attr_reader :games
 
   def initialize(file_path)
     @games = create_games(file_path)
+    @teams = nil
   end
 
   def create_games(file_path)

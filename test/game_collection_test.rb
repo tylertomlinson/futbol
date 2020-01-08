@@ -6,6 +6,7 @@ class GameCollectionTest < Minitest::Test
   def setup
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game = @game_collection.games.first
+    @total_game_collection = GameCollection.new("./data/games.csv")
   end
 
   def test_it_exists
