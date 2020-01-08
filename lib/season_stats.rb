@@ -1,3 +1,6 @@
+require_relative 'game_collection'
+require_relative 'game_teams_collection'
+
 class SeasonStats
 
   def initialize(game_collection, game_teams_collection)

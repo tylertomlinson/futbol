@@ -6,7 +6,7 @@ require_relative 'team_collection'
 require_relative 'season_stats'
 
 class StatTracker
-  attr_reader :game_path, :game_teams_path
+  attr_reader :game_path, :game_teams_path, :teams_path
 
   def self.from_csv(file_paths)
     game_path = file_paths[:games]
@@ -127,6 +127,14 @@ class StatTracker
 
   def average_win_percentage(team_id)
     @game_teams.average_win_percentage(team_id.to_s).round(2)
+  end
+
+  def biggest_team_blowout(team_id)
+    @season_stats.difference_between_wins(team_id.to_i).max
+  end
+
+  def worst_loss(team_id)
+    @season_stats.difference_between_losses(team_id.to_i).max
   end
 
 end
