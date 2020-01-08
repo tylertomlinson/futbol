@@ -129,6 +129,7 @@ class GameStats
   end
 
   def find_win_percentage_by_type(team_id, season, type)
+    return 0.0 if games_by_season_team_and_type(team_id, season, type).to_f == 0.0
     ((find_away_type_wins(team_id, season, type) + find_home_type_wins(team_id, season, type)) / games_by_season_team_and_type(team_id, season, type).to_f).round(2)
   end
 
@@ -145,7 +146,7 @@ class GameStats
     end
 
     all_teams.each do |team_id, difference|
-      all_teams.delete(team_id) if difference.nan? == true
+      all_teams[team_id] = 0.0 if difference.nan? == true
     end
     all_teams
   end

@@ -130,11 +130,11 @@ class StatTracker
   end
 
   def biggest_bust(season)
-    @game_stats.find_biggest_bust(season)
+    @game.find_biggest_bust(season)
   end
 
   def biggest_surprise(league)
-    @game_stats.find_biggest_surprise(season)
+    @game.find_biggest_surprise(season)
   end
 
 end

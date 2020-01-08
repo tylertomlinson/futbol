@@ -100,7 +100,7 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_it_can_find_biggest_bust
-    assert_equal 21, @total_game_stats.find_biggest_bust("20132014")
+    assert_equal 23, @total_game_stats.find_biggest_bust("20132014")
   end
 
   def test_it_can_find_biggest_surprise
