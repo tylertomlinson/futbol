@@ -42,25 +42,20 @@ class SeasonStats
 
   def seasonal_summary(team_id)
     team_games_by_season = @game_collection.from_team(@game_collection.game_lists_by_season, team_id)
-    reg_post_split = team_games_by_season.reduce({}) do |acc, season_games_hash|
+    team_games_by_season.reduce({}) do |acc, season_games_hash|
       games_chunk = @game_collection.separate_season_by_types(season_games_hash[1])
-      acc[season_games_hash[0]] = format_seasonal_summary(games_chunk)
+      acc[season_games_hash[0]] = {
+        regular_season: format_seasonal_summary(games_chunk[:regular_season]),
+        postseason: format_seasonal_summary(games_chunk[:regular_season])}
       acc
     end
-    # require "pry"; binding.pry
-    # reg_post_split.each do |season, hash|
-    #   hash[:]
-    # end
+    require "pry"; binding.pry
   end
 
-  def format_seasonal_summary(split_hash)
-    reg_games = split_hash[:regular_season]
-    post_games = split_hash[:postseason]
-    split_hash[:regular_season] = {win_percentage: reg_games,
-      total_goals_scored: reg_games, total_goals_against: reg_games,
-      average_goals_scored: reg_games, average_goals_against: reg_games}
-    split_hash[:postseason] = {win_percentage: post_games,
-      total_goals_scored: post_games, total_goals_against: post_games,
-      average_goals_scored: post_games, average_goals_against: post_games}
+  def format_seasonal_summary(games)
+    games = "test"
+    {win_percentage: games,
+      total_goals_scored: games, total_goals_against: games,
+      average_goals_scored: games, average_goals_against: games}
   end
 end
