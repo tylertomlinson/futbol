@@ -6,7 +6,6 @@ class TeamCollection
 
   attr_reader :teams_array
 
-
   def initialize(file_path)
     @teams_array = create_teams_array(file_path)
   end
@@ -25,7 +24,6 @@ class TeamCollection
 
   def team_info(team_id)
     team = @teams_array.find {|team| team.team_id.to_i == team_id}
-
     {
       "team_id" => team.team_id,
       "franchise_id" => team.franchise_id,

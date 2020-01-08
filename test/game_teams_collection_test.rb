@@ -56,13 +56,8 @@ class GameTeamsCollectionTest < Minitest::Test
     assert_equal 5, game_teams_hash[3].length
   end
 
-  def test_can_get_a_teams_game_ids_with_wins
+  def test_it_can_get_game_ids_by_result
     expected =  ["2016030171", "2016030172", "2016030173", "2016030174"]
-    assert_equal expected, @game_teams_collection.winning_game_ids(24)
-  end
-
-  def test_can_get_a_teams_game_ids_with_losses
-    assert_equal [], @game_teams_collection.losing_game_ids(24)
-    assert_equal ["2016030171", "2016030172", "2016030173", "2016030174"], @game_teams_collection.losing_game_ids(20)
+    assert_equal expected, @game_teams_collection.game_ids_by_result(24, "WIN")
   end
 end

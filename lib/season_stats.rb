@@ -27,37 +27,18 @@ class SeasonStats
     end
   end
 
-  def difference_between_wins(team_id)
-    differences = []
-    wins = @game_teams_collection.winning_game_ids(team_id)
-    wins.each do |game_id|
-      @game_collection.games.each do |game|
-        if game_id == game.game_id
-          differences << game.difference_between_score
-        end
-      end
+  def game_score_differentials(team_id, result)
+    games = @game_teams_collection.game_ids_by_result(team_id, result)
+    games.map do |game_id|
+      @game_collection.games.find{|game| game.game_id == game_id}.difference_between_score
     end
-    differences
-  end
-
-  def difference_between_losses(team_id)
-    differences = []
-    losses = @game_teams_collection.losing_game_ids(team_id)
-    losses.each do |game_id|
-      @game_collection.games.each do |game|
-        if game_id == game.game_id
-          differences << game.difference_between_score
-        end
-      end
-    end
-    differences
   end
 
   def biggest_team_blowout(team_id)
-    difference_between_wins(team_id).max
+    game_score_differentials(team_id, "WIN").max
   end
 
   def worst_loss(team_id)
-    difference_between_losses(team_id).max
+    game_score_differentials(team_id, "LOSS").max
   end
 end

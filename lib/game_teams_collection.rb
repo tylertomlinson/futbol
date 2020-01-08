@@ -55,23 +55,9 @@ class GameTeamsCollection
     away_only
   end
 
-  def winning_game_ids(team_id)
-    game_ids = []
-    @game_teams_array.each do |game_team|
-      if game_team.result == "WIN" && game_team.team_id == team_id
-        game_ids << game_team.game_id
-      end
+  def game_ids_by_result(team_id, result)
+    @game_teams_by_id[team_id].map do |game_team|
+        game_team.game_id if game_team.result == result
     end
-    game_ids
-  end
-
-  def losing_game_ids(team_id)
-    game_ids = []
-    @game_teams_array.each do |game_team|
-      if game_team.result == "LOSS" && game_team.team_id == team_id
-        game_ids << game_team.game_id
-      end
-    end
-    game_ids
   end
 end

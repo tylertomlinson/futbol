@@ -26,13 +26,9 @@ class SeasonStatsTest < Minitest::Test
     expected = {14=>0.83, 19=>0.83}
     assert_equal expected, @season_stats.head_to_head_ids(16)
   end
-
-  def test_can_get_difference_between_wins
-    assert_equal [1, 1, 1, 2], @season_stats.difference_between_wins(24)
-  end
-
-  def test_can_get_difference_between_losses
-    assert_equal [1, 1, 1, 2], @season_stats.difference_between_losses(20)
+  
+  def test_can_get_game_score_differentials
+    assert_equal [1, 1, 1, 2], @season_stats.game_score_differentials(20, "LOSS")
   end
 
   def test_can_get_biggest_team_blowout
