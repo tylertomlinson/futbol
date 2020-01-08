@@ -26,8 +26,21 @@ class SeasonStats
 
   def difference_between_wins(team_id)
     differences = []
-    win = @game_teams_collection.winning_game_ids(team_id)
-    win.each do |game_id|
+    wins = @game_teams_collection.winning_game_ids(team_id)
+    wins.each do |game_id|
+      @game_collection.games.each do |game|
+        if game_id == game.game_id
+          differences << game.difference_between_score
+        end
+      end
+    end
+    differences
+  end
+
+  def difference_between_losses(team_id)
+    differences = []
+    losses = @game_teams_collection.losing_game_ids(team_id)
+    losses.each do |game_id|
       @game_collection.games.each do |game|
         if game_id == game.game_id
           differences << game.difference_between_score
