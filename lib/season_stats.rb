@@ -23,4 +23,8 @@ class SeasonStats
       acc
     end
   end
+
+  def difference_
+    require "pry"; binding.pry
+  end
 end
