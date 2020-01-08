@@ -1,3 +1,5 @@
+require_relative 'game_collection'
+require_relative 'game_teams_collection'
 require_relative 'createable'
 
 class SeasonStats
@@ -28,15 +30,26 @@ class SeasonStats
     end
   end
 
-  def make_season_game_array(season)
-    season_game_array = @game_collection.game_hash_from_array_by_attribute(@game_collection.games, :season)[season]
-
-    @season_game_teams_array = season_game_array.reduce([]) do |acc, game|
-      @game_teams_collection.each {|game_team| acc << game_team if game_team.game_id == game.game_id}
-      acc
+  def game_score_differentials(team_id, result)
+    games = @game_teams_collection.game_ids_by_result(team_id, result)
+    games.map do |game_id|
+      @game_collection.games.find{|game| game.game_id == game_id}.difference_between_score
     end
   end
 
+  def biggest_team_blowout(team_id)
+    game_score_differentials(team_id, "WIN").max
+  end
 
+  def worst_loss(team_id)
+    game_score_differentials(team_id, "LOSS").max
+  end
 
+  # def make_season_game_array(season)
+  #   season_game_array = @game_collection.game_hash_from_array_by_attribute(@game_collection.games, :season)[season]
+  #   @season_game_teams_array = season_game_array.reduce([]) do |acc, game|
+  #     @game_teams_collection.each {|game_team| acc << game_team if game_team.game_id == game.game_id}
+  #     acc
+  #   end
+  # end
 end

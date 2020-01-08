@@ -55,4 +55,9 @@ class GameTeamsCollectionTest < Minitest::Test
     assert_equal 4, game_teams_hash[20].length
     assert_equal 5, game_teams_hash[3].length
   end
+
+  def test_it_can_get_game_ids_by_result
+    expected =  ["2016030171", "2016030172", "2016030173", "2016030174"]
+    assert_equal expected, @game_teams_collection.game_ids_by_result(24, "WIN")
+  end
 end

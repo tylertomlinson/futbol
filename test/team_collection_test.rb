@@ -29,4 +29,15 @@ class TeamCollectionTest < Minitest::Test
   def test_it_can_find_team_name_by_id
     assert_equal "Chicago Fire", @teams_collection.team_name_by_id(4)
   end
+
+  def test_can_get_team_info_hash
+    assert_equal ({
+      "team_id"=>"4",
+      "franchise_id"=>"16",
+      "team_name"=>"Chicago Fire",
+      "abbreviation"=>"CHI",
+      "link"=>"/api/v1/teams/4"}),
+     @teams_collection.team_info(4)
+
+  end
 end
