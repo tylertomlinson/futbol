@@ -7,6 +7,8 @@ class GameStatsTest < Minitest::Test
   def setup
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game_stats = GameStats.new(@game_collection)
+    @total_game_collection = GameCollection.new("./data/games.csv")
+    @total_game_stats = GameStats.new(@total_game_collection)
   end
 
   def test_it_exists
@@ -79,5 +81,29 @@ class GameStatsTest < Minitest::Test
 
   def test_it_can_get_worst_defense
     assert_equal 20, @game_stats.worst_defense
+  end
+
+  def test_it_can_find_away_postseason_wins
+    assert_equal 3, @game_stats.find_away_type_wins(16,"20132014", "Postseason")
+  end
+
+  def test_it_can_find_home_postseason_wins
+    assert_equal 2, @game_stats.find_home_type_wins(16, "20132014", "Postseason")
+  end
+
+  def test_it_can_find_total_postseason_games
+    assert_equal 6, @game_stats.games_by_season_team_and_type(16, "20132014", "Postseason")
+  end
+
+  def test_it_can_find_win_percentage_of_a_team_by_type
+    assert_equal 0.83, @game_stats.find_win_percentage_by_type(16, "20132014", "Postseason")
+  end
+
+  def test_it_can_find_biggest_bust
+    assert_equal 23, @total_game_stats.find_biggest_bust("20132014")
+  end
+
+  def test_it_can_find_biggest_surprise
+    assert_equal 26, @total_game_stats.find_biggest_surprise("20132014")
   end
 end

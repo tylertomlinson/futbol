@@ -129,4 +129,12 @@ class StatTracker
     @game_teams.average_win_percentage(team_id.to_s).round(2)
   end
 
+  def biggest_bust(season)
+    @games.find_biggest_bust(season)
+  end
+
+  def biggest_surprise(league)
+    @games.find_biggest_surprise(season)
+  end
+
 end
