@@ -110,11 +110,7 @@ class StatTracker
   end
 
   def head_to_head(team_id)
-    id_hash = @season_stats.head_to_head_ids(team_id.to_i)
-    id_hash.reduce({}) do |acc, id_rate_pair|
-      acc[@team_collection.team_name_by_id(id_rate_pair[0])] = id_rate_pair[1]
-      acc
-    end
+    @team_collection.id_hash_to_names(@season_stats.head_to_head_ids(team_id.to_i))
   end
 
   def most_goals_scored(team_id)
@@ -136,5 +132,4 @@ class StatTracker
   def biggest_surprise(season)
     @team_collection.team_name_by_id(@games.find_biggest_surprise(season))
   end
-
 end
