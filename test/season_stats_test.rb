@@ -27,6 +27,7 @@ class SeasonStatsTest < Minitest::Test
     assert_equal expected, @season_stats.head_to_head_ids(16)
   end
 
-  def test_can_get_differe
+  def test_can_get_difference_between_wins
+    assert_equal [1, 1, 1, 2],@season_stats.difference_between_wins(24)
   end
 end
