@@ -11,7 +11,6 @@ class SeasonStatsTest < Minitest::Test
   end
 
   def test_it_exists
-    skip
     assert_instance_of SeasonStats, @season_stats
   end
 
@@ -40,7 +39,7 @@ class SeasonStatsTest < Minitest::Test
     assert_equal 2, @season_stats.biggest_team_blowout(24)
   end
 
-  def test_can_get_biggest_team_blowout
+  def test_can_get_worst_team_loss
     assert_equal 2, @season_stats.worst_loss(20)
   end
 end
