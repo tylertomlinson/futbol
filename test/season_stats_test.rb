@@ -26,4 +26,8 @@ class SeasonStatsTest < Minitest::Test
     expected = {14=>0.83, 19=>0.83}
     assert_equal expected, @season_stats.head_to_head_ids(16)
   end
+
+  def test_it_can_make_season_game_teams_array
+    assert_equal [], @game_collection.make_season_game_array("20132014")
+  end
 end
