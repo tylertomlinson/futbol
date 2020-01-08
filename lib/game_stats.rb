@@ -6,12 +6,12 @@ class GameStats
     @teams = nil
   end
 
+  def total_opponent_goals(array, team_id)
+    @game_collection.games.sum{|game| game.opponent_goals(team_id)}
+  end
+
   def average_goals(array)
-    total_goals = array.reduce(0) do |sum, game|
-      sum += game.total_score
-      sum
-    end
-    (total_goals.to_f / array.length).round(2)
+    (total_goals = array.sum {|game| game.total_score}.to_f / array.length).round(2)
   end
 
   def average_goals_per_game
