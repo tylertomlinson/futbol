@@ -8,6 +8,11 @@ class SeasonStatsTest < Minitest::Test
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game_teams_collection = GameTeamsCollection.new("./test/fixtures/game_teams_truncated.csv")
     @season_stats = SeasonStats.new(@game_collection, @game_teams_collection)
+
+    @total_game_collection = GameCollection.new("./data/games.csv")
+    @total_game_teams_collection = GameTeamsCollection.new("./data/game_teams.csv")
+
+    @total_season_stats = SeasonStats.new(@total_game_collection, @total_game_teams_collection)
   end
 
   def test_it_exists
@@ -25,6 +30,10 @@ class SeasonStatsTest < Minitest::Test
   def test_it_can_report_head_to_head_results
     expected = {14=>0.83, 19=>0.83}
     assert_equal expected, @season_stats.head_to_head_ids(16)
+  end
+
+  def test_it_can_make_seasonal_summary
+    @total_season_stats.seasonal_summary(16)
   end
 
   # def test_it_can_make_season_game_teams_array
