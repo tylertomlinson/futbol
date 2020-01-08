@@ -30,4 +30,8 @@ class SeasonStatsTest < Minitest::Test
   def test_can_get_difference_between_wins
     assert_equal [1, 1, 1, 2],@season_stats.difference_between_wins(24)
   end
+
+  def test_can_get_difference_between_losses
+    assert_equal [1, 1, 1, 2],@season_stats.difference_between_losses(20)
+  end
 end
