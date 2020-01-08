@@ -137,4 +137,7 @@ class StatTracker
     @season_stats.difference_between_losses(team_id.to_i).max
   end
 
+  def team_info(team_id)
+    @team_collection.team_info(team_id.to_i)
+  end
 end
