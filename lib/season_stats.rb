@@ -1,5 +1,5 @@
 class SeasonStats
-  
+
   def initialize(game_collection, game_teams_collection)
     @game_collection = game_collection
     @game_teams_collection = game_teams_collection

@@ -29,4 +29,5 @@ class GameCollection
     end
     season_games
   end
+
 end

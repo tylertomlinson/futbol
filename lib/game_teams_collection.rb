@@ -54,4 +54,14 @@ class GameTeamsCollection
     end
     away_only
   end
+
+  def winning_game_ids(team_id)
+    game_ids = []
+    @game_teams_array.each do |game_team|
+      if game_team.result == "WIN" && game_team.team_id == team_id
+        game_ids << game_team.game_id
+      end
+    end
+    game_ids
+  end
 end
