@@ -12,7 +12,7 @@ class GameTeamsStats
   end
 
   def average_win_percentage(team_id)
-    total_wins_per_team(team_id.to_i) / @game_teams_collection.total_games_per_team(team_id.to_i).to_f
+    (total_wins_per_team(team_id.to_i) / @game_teams_collection.total_games_per_team(team_id.to_i).to_f).round(2)
   end
 
   def total_goals_by_team_id(team_id)
