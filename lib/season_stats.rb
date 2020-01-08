@@ -49,4 +49,12 @@ class SeasonStats
     end
     differences
   end
+
+  def biggest_team_blowout(team_id)
+    difference_between_wins(team_id).max
+  end
+
+  def worst_loss(team_id)
+    difference_between_losses(team_id).max
+  end
 end
