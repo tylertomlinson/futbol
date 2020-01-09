@@ -29,7 +29,7 @@ class GameCollection
     end
   end
 
-  def games_by_season #COUNT of games
+  def count_of_games_by_season
     season_games = game_lists_by_season
     season_games.each do |key, value|
       season_games[key] = value.length

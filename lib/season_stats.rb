@@ -1,11 +1,8 @@
 require_relative 'game_collection'
 require_relative 'game_teams_collection'
 require_relative 'team_collection'
-require_relative 'createable'
 
 class SeasonStats
-  include Createable
-
   def initialize(game_stats, gtc, team_collection)
     @game_stats = game_stats
     @gtc = gtc

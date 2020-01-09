@@ -28,8 +28,8 @@ class GameCollectionTest < Minitest::Test
     assert_equal 4, @game_collection.game_lists_by_season.length
   end
 
-  def test_games_by_season
+  def test_it_can_find_count_of_games_by_season
     expected = {"20162017" => 4, "20142015" => 6, "20152016" => 10, "20132014" => 6}
-    assert_equal expected, @game_collection.games_by_season
+    assert_equal expected, @game_collection.count_of_games_by_season
   end
 end

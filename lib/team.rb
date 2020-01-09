@@ -1,5 +1,4 @@
 class Team
-
 attr_reader :team_name, :team_id, :franchise_id, :abbreviation, :link
 
   def initialize(team)
