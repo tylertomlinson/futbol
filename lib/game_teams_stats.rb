@@ -56,43 +56,19 @@ class GameTeamsStats
   end
 
   def highest_scoring_home_team
-    new = []
-    home_games_only_average.each do |game_id, average|
-      if average == home_games_only_average.values.max
-      new << game_id.to_i
-      end
-    end
-    new.first
+    home_games_only_average.max_by{|k,v| v}[0]
   end
 
   def lowest_scoring_home_team
-    new = []
-    home_games_only_average.each do |game_id, average|
-      if average == home_games_only_average.values.min
-      new << game_id.to_i
-      end
-    end
-    new.first
+    home_games_only_average.min_by{|k,v| v}[0]
   end
 
   def highest_scoring_visitor
-    new = []
-    away_games_only_average.each do |game_id, average|
-      if average == away_games_only_average.values.max
-        new << game_id.to_i
-      end
-    end
-    new.first
+    away_games_only_average.max_by{|k,v| v}[0]
   end
 
   def lowest_scoring_visitor
-    new = []
-    away_games_only_average.each do |game_id, average|
-      if average == away_games_only_average.values.min
-        new << game_id.to_i
-      end
-    end
-    new.first
+    away_games_only_average.min_by{|k,v| v}[0]
   end
 
   def team_win_percentage(games_hash, team, hoa = nil)
