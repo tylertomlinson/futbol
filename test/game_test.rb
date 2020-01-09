@@ -43,4 +43,9 @@ class GameTest < Minitest::Test
     assert_equal 2, @game.opponent_goals(24)
   end
 
+  def test_it_can_find_team_goals
+    assert_equal 2, @game.team_goals(20)
+    assert_equal 3, @game.team_goals(24)
+  end
+
 end
