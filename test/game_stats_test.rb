@@ -19,6 +19,23 @@ class GameStatsTest < Minitest::Test
     assert_instance_of GameCollection, @game_stats.game_collection
   end
 
+  def test_it_can_calculate_total_opponent_goals
+    assert_equal 51, @game_stats.total_opponent_goals(@game_collection.games, 24)
+  end
+
+  def test_it_can_calculate_total_team_goals
+    assert_equal 61, @game_stats.total_team_goals(@game_collection.games, 24)
+  end
+
+  def test_it_can_calculate_average_opponent_goals
+    assert_equal 1.96, @game_stats.average_opponent_goals(@game_collection.games, 24)
+  end
+
+  def test_it_can_calculate_average_team_goals
+    assert_equal 2.35, @game_stats.average_team_goals(@game_collection.games, 24)
+
+  end
+
   def test_it_can_calculate_average_goals_per_game
     assert_equal  4.31, @game_stats.average_goals_per_game
   end

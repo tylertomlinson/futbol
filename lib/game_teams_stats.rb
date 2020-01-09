@@ -8,7 +8,7 @@ class GameTeamsStats
   end
 
   def total_wins_per_team(team_id)
-    @game_teams_collection.game_teams_array.select {|game_team| game_team.result == "WIN" && team_id == game_team.team_id.to_i}.count
+    @game_teams_collection.game_teams_by_id[team_id.to_i].count {|gt| gt.result == "WIN"}
   end
 
   def average_win_percentage(team_id)
@@ -56,58 +56,27 @@ class GameTeamsStats
   end
 
   def highest_scoring_home_team
-    new = []
-    home_games_only_average.each do |game_id, average|
-      if average == home_games_only_average.values.max
-      new << game_id.to_i
-      end
-    end
-    new.first
+    home_games_only_average.max_by{|k,v| v}[0]
   end
 
   def lowest_scoring_home_team
-    new = []
-    home_games_only_average.each do |game_id, average|
-      if average == home_games_only_average.values.min
-      new << game_id.to_i
-      end
-    end
-    new.first
+    home_games_only_average.min_by{|k,v| v}[0]
   end
 
   def highest_scoring_visitor
-    new = []
-    away_games_only_average.each do |game_id, average|
-      if average == away_games_only_average.values.max
-      new << game_id.to_i
-      end
-    end
-    new.first
+    away_games_only_average.max_by{|k,v| v}[0]
   end
 
   def lowest_scoring_visitor
-    new = []
-    away_games_only_average.each do |game_id, average|
-      if average == away_games_only_average.values.min
-      new << game_id.to_i
-      end
-    end
-    new.first
-  end
-
-  def percentage(numerator, denominator) #to-do: make Calculatable module
-    return ((numerator.to_f / denominator) * 100).round(2)
+    away_games_only_average.min_by{|k,v| v}[0]
   end
 
   def team_win_percentage(games_hash, team, hoa = nil)
     team_games = Hash.new
-    if hoa
-      team_games[team] = games_hash[team].find_all { |game_team| game_team.hoa == hoa }
-    else
-      team_games[team] = games_hash[team]
-    end
+    team_games[team] = games_hash[team].find_all { |game_team| game_team.hoa == hoa } if hoa
+    team_games[team] = games_hash[team] if hoa.nil?
     wins = team_games[team].count { |game_team| game_team.result == "WIN" }
-    percentage(wins, team_games[team].length)
+    (wins.to_f / team_games[team].length).round(2)
   end
 
   def winningest_team_id
@@ -132,7 +101,7 @@ class GameTeamsStats
 
   def worst_fans_ids
     hoa_diffs = hoa_differences(@game_teams_collection.game_teams_by_id)
-    worst_fan_teams = hoa_diffs.find_all { |key, value| value < 0 }
+    worst_fan_teams = hoa_diffs.find_all { |key, value| value <= 0 }
     worst_fan_teams.map { |element| element[0] }
   end
 end

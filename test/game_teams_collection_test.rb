@@ -24,10 +24,6 @@ class GameTeamsCollectionTest < Minitest::Test
   end
 
   def test_it_can_store_game_teams_by_id
-    var = @game_teams_collection.game_teams_hash.first
-    name = var[0]
-    value = var[1]
-    test_hash = {name => value}
     assert_equal 9, @game_teams_collection.game_teams_hash.length
   end
 
@@ -59,5 +55,9 @@ class GameTeamsCollectionTest < Minitest::Test
   def test_it_can_get_game_ids_by_result
     expected =  ["2016030171", "2016030172", "2016030173", "2016030174"]
     assert_equal expected, @game_teams_collection.game_ids_by_result(24, "WIN")
+  end
+
+  def test_it_can_sort_game_teams_by_coach
+    @game_teams_collection.game_teams_by_coach
   end
 end

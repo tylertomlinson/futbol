@@ -36,28 +36,31 @@ class GameTeamsCollection
   end
 
   def home_games_only
-    home_only = {}
-    @game_teams_by_id.each do |team_id, games|
-      home_only[team_id] = games.find_all do |game|
-        game.hoa == "home"
-      end
-    end
-    home_only
+    teams_by_hoa("home")
   end
 
   def away_games_only
-    away_only = {}
-    @game_teams_by_id.each do |team_id, games|
-      away_only[team_id] = games.find_all do |game|
-        game.hoa == "away"
-      end
+    teams_by_hoa("away")
+  end
+
+  def teams_by_hoa(hoa)
+    @game_teams_by_id.reduce({}) do |acc, game_teams|
+      acc[game_teams[0]] = game_teams[1].find_all {|gt| gt.hoa == hoa}
+      acc
     end
-    away_only
   end
 
   def game_ids_by_result(team_id, result)
     @game_teams_by_id[team_id].map do |game_team|
         game_team.game_id if game_team.result == result
     end.compact
+  end
+
+  def game_teams_by_coach
+    @game_teams_array.reduce({}) do |acc, game_team|
+      acc[game_team.head_coach] << game_team if acc[game_team.head_coach]
+      acc[game_team.head_coach] = [game_team] if acc[game_team.head_coach].nil?
+      acc
+    end
   end
 end

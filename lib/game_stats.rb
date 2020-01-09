@@ -1,17 +1,30 @@
 class GameStats
-  attr_reader :game_collection
+  attr_reader :game_collection, :teams
 
   def initialize(game_collection)
     @game_collection = game_collection
-    @teams = nil
+    @teams = make_teams
   end
 
-  def average_goals(array)
-    total_goals = array.reduce(0) do |sum, game|
-      sum += game.total_score
-      sum
-    end
-    (total_goals.to_f / array.length).round(2)
+  def total_opponent_goals(games, team_id)
+    games.sum{|game| game.opponent_goals(team_id)}
+  end
+
+  def total_team_goals(games, team_id)
+    games.sum{|game| game.team_goals(team_id)}
+  end
+
+  def average_opponent_goals(games, team_id)
+    (total_opponent_goals(games, team_id).to_f / games.length).round(2)
+  end
+
+  def average_team_goals(games, team_id)
+    (total_team_goals(games, team_id).to_f / games.length).round(2)
+  end
+
+  def average_goals(games)
+    return 0.0 if games.empty?
+    (games.sum {|game| game.total_score}.to_f / games.length).round(2)
   end
 
   def average_goals_per_game
@@ -67,8 +80,8 @@ class GameStats
     games_difference
   end
 
-  def teams
-    @teams = @game_collection.games.reduce([]) do |teams,game|
+  def make_teams
+    @game_collection.games.reduce([]) do |teams,game|
       teams << game.home_team_id
       teams
     end.uniq
@@ -76,26 +89,22 @@ class GameStats
 
   def find_away_defense_goals(away_team_id)
     away_defense = @game_collection.games.find_all {|game| game.away_team_id == (away_team_id)}
-
     away_defense.map {|game| game.home_goals}
   end
 
   def find_home_defense_goals(home_team_id)
     home_defense = @game_collection.games.find_all {|game| game.home_team_id == (home_team_id)}
-
     home_defense.map {|game| game.away_goals}
   end
 
   def find_average_defense_goals(team_id)
     defense_goals_array = find_home_defense_goals(team_id) + find_away_defense_goals(team_id)
-
     goals_total = defense_goals_array.reduce(0) {|sum, defense_score| sum + defense_score}
-
     average = (goals_total.to_f / defense_goals_array.length).round(2)
   end
 
   def find_defensive_averages
-    teams.reduce({}) do |defenses, team|
+    @teams.reduce({}) do |defenses, team|
       defenses[team] = find_average_defense_goals(team)
       defenses
     end
@@ -111,20 +120,17 @@ class GameStats
 
   def find_away_type_wins(away_team_id, season, type)
     away_games = @game_collection.game_lists_by_season[season].find_all {|game| game.away_team_id == away_team_id && game.type == type && game.season == season}
-
     away_games.find_all {|game| game.away_goals > game.home_goals}.length
   end
 
   def find_home_type_wins(home_team_id, season, type)
     home_games = @game_collection.game_lists_by_season[season].find_all {|game| game.home_team_id == home_team_id && game.type == type && game.season == season}
-
     home_games.find_all {|game| game.home_goals > game.away_goals}.length
   end
 
   def games_by_season_team_and_type(team_id, season, type)
     away_games = @game_collection.game_lists_by_season[season].find_all {|game| game.type == type && game.away_team_id == team_id}.length
     home_games = @game_collection.game_lists_by_season[season].find_all {|game| game.type == type && game.home_team_id == team_id}.length
-
     away_games + home_games
   end
 
@@ -138,17 +144,11 @@ class GameStats
   end
 
   def make_teams_by_win_percentage_difference(season)
-    teams
-
-    all_teams = @teams.reduce({}) do |acc, team|
+    @teams.reduce({}) do |acc, team|
       acc[team] = find_difference_in_win_percentage_by_type(team, season)
+      acc[team] = 0.0 if acc[team].nan? == true
       acc
     end
-
-    all_teams.each do |team_id, difference|
-      all_teams[team_id] = 0.0 if difference.nan? == true
-    end
-    all_teams
   end
 
   def find_biggest_bust(season)
