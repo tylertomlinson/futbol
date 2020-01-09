@@ -30,4 +30,9 @@ class Game
     return home_goals if team_id != home_team_id
     away_goals
   end
+
+  def team_goals(team_id)
+    return home_goals if team_id == home_team_id
+    away_goals
+  end
 end
