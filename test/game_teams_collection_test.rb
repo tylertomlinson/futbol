@@ -24,10 +24,6 @@ class GameTeamsCollectionTest < Minitest::Test
   end
 
   def test_it_can_store_game_teams_by_id
-    # var = @game_teams_collection.game_teams_hash.first
-    # name = var[0]
-    # value = var[1]
-    # test_hash = {name => value}
     assert_equal 9, @game_teams_collection.game_teams_hash.length
   end
 

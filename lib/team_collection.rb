@@ -22,7 +22,6 @@ class TeamCollection
     @teams_array.find {|team| team.team_id.to_i == team_id}.team_name
   end
 
-
   def id_hash_to_names(id_hash)
     id_hash.reduce({}) do |acc, value_hash|
       acc[team_name_by_id(value_hash[0])] = value_hash[1]

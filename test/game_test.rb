@@ -47,5 +47,4 @@ class GameTest < Minitest::Test
     assert_equal 2, @game.team_goals(20)
     assert_equal 3, @game.team_goals(24)
   end
-
 end
