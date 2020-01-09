@@ -30,6 +30,11 @@ class TeamCollectionTest < Minitest::Test
     assert_equal "Chicago Fire", @teams_collection.team_name_by_id(4)
   end
 
+  def test_it_can_convert_ids_to_names
+    expected = {"Atlanta United"=>0.3, "Chicago Fire"=>0.56}
+    assert_equal expected, @teams_collection.id_hash_to_names({1 => 0.3, 4 => 0.56})
+  end
+
   def test_can_get_team_info_hash
     assert_equal ({
       "team_id"=>"4",
@@ -38,6 +43,5 @@ class TeamCollectionTest < Minitest::Test
       "abbreviation"=>"CHI",
       "link"=>"/api/v1/teams/4"}),
      @teams_collection.team_info(4)
-
   end
 end

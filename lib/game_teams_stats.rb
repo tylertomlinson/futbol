@@ -96,7 +96,7 @@ class GameTeamsStats
   end
 
   def percentage(numerator, denominator) #to-do: make Calculatable module
-    return ((numerator.to_f / denominator) * 100).round(2)
+    return ((numerator.to_f / denominator)).round(2)
   end
 
   def team_win_percentage(games_hash, team, hoa = nil)
@@ -132,7 +132,7 @@ class GameTeamsStats
 
   def worst_fans_ids
     hoa_diffs = hoa_differences(@game_teams_collection.game_teams_by_id)
-    worst_fan_teams = hoa_diffs.find_all { |key, value| value < 0 }
+    worst_fan_teams = hoa_diffs.find_all { |key, value| value <= 0 }
     worst_fan_teams.map { |element| element[0] }
   end
 end

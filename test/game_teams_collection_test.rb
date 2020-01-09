@@ -60,4 +60,8 @@ class GameTeamsCollectionTest < Minitest::Test
     expected =  ["2016030171", "2016030172", "2016030173", "2016030174"]
     assert_equal expected, @game_teams_collection.game_ids_by_result(24, "WIN")
   end
+
+  def test_it_can_sort_game_teams_by_coach
+    @game_teams_collection.game_teams_by_coach
+  end
 end

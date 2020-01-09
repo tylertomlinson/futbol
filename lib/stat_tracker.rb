@@ -22,7 +22,7 @@ class StatTracker
     @game_teams = GameTeamsStats.new(@game_teams_collection)
     @game_stats = GameStats.new(@game_collection)
     @team_collection = TeamCollection.new(teams_path)
-    @season_stats = SeasonStats.new(@game_stats, @game_teams_collection)
+    @season_stats = SeasonStats.new(@game_stats, @game_teams_collection, @team_collection)
   end
 
   def highest_total_score
@@ -125,14 +125,6 @@ class StatTracker
     @game_teams.average_win_percentage(team_id.to_s)
   end
 
-  def biggest_bust(season)
-    @team_collection.team_name_by_id(@game_stats.find_biggest_bust(season))
-  end
-
-  def biggest_surprise(season)
-    @team_collection.team_name_by_id(@game_stats.find_biggest_surprise(season))
-  end
-
   def seasonal_summary(team_id)
     @season_stats.seasonal_summary(team_id.to_i)
   end
@@ -155,5 +147,13 @@ class StatTracker
 
   def biggest_surprise(season)
     @team_collection.team_name_by_id(@game_stats.find_biggest_surprise(season))
+  end
+
+  def winningest_coach(season)
+    @season_stats.extreme_coaches(season)[1]
+  end
+
+  def worst_coach(season)
+    @season_stats.extreme_coaches(season)[0]
   end
 end

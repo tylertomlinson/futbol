@@ -3,22 +3,24 @@ require './lib/game_collection'
 require './lib/game_teams_collection'
 require './lib/game_stats'
 require './lib/season_stats'
+require './lib/team_collection'
 
 class SeasonStatsTest < Minitest::Test
   def setup
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game_teams_collection = GameTeamsCollection.new("./test/fixtures/game_teams_truncated.csv")
+    tc = TeamCollection.new('./data/teams.csv')
 
     @game_stats = GameStats.new(@game_collection)
 
-    @season_stats = SeasonStats.new(@game_stats, @game_teams_collection)
+    @season_stats = SeasonStats.new(@game_stats, @game_teams_collection, tc)
 
     @total_game_collection = GameCollection.new("./data/games.csv")
     @total_game_teams_collection = GameTeamsCollection.new("./data/game_teams.csv")
 
     @total_game_stats = GameStats.new(@total_game_collection)
 
-    @total_season_stats = SeasonStats.new(@total_game_stats, @total_game_teams_collection)
+    @total_season_stats = SeasonStats.new(@total_game_stats, @total_game_teams_collection, tc)
   end
 
   def test_it_exists
@@ -57,5 +59,9 @@ class SeasonStatsTest < Minitest::Test
 
   def test_can_get_worst_team_loss
     assert_equal 2, @season_stats.worst_loss(20)
+  end
+
+  def test_it_can_find_extremest_coaches
+    assert_equal ["Peter Laviolette", "Claude Julien"], @total_season_stats.extreme_coaches("20132014")
   end
 end

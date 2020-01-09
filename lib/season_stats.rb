@@ -1,14 +1,16 @@
 require_relative 'game_collection'
 require_relative 'game_teams_collection'
+require_relative 'team_collection'
 require_relative 'createable'
 
 class SeasonStats
   include Createable
 
-  def initialize(game_stats, gtc)
+  def initialize(game_stats, gtc, team_collection)
     @game_stats = game_stats
     @gtc = gtc
     @season_game_teams_array = nil
+    @teams = team_collection.teams_array.map{|team| team.team_id}
   end
 
   def corresponding_game(game_id)
@@ -17,7 +19,7 @@ class SeasonStats
 
   def corresponding_game_teams(games)
     games.map do |game|
-      @gtc.game_teams_array.find_all {|game_team| game.game_id ==  game_team.game_id}
+      @gtc.game_teams_array.find_all {|game_team| game.game_id == game_team.game_id}
     end.flatten
   end
 
@@ -39,16 +41,6 @@ class SeasonStats
     results_by_opponents_hash.reduce({}) do |acc, results|
       win_count = results[1].count {|result| result == "WIN"}
       acc[results[0]] = (win_count.to_f / results_by_opponents_hash[results[0]].length).round(2)
-      acc
-    end
-  end
-
-
-  def make_season_game_array(season)
-    season_game_array = @game_stats.game_collection.game_hash_from_array_by_attribute(@game_stats.game_collection.games, :season)[season]
-
-    @season_game_teams_array = season_game_array.reduce([]) do |acc, game|
-      @gtc.each {|game_team| acc << game_team if game_team.game_id == game.game_id}
       acc
     end
   end
@@ -99,5 +91,15 @@ class SeasonStats
 
   def worst_loss(team_id)
     game_score_differentials(team_id, "LOSS").max
+  end
+
+  def extreme_coaches(season)
+    coach_gts = @gtc.game_teams_by_coach
+    coach_gts.each do |k,v|
+      coach_gts[k].delete_if{|gt| corresponding_game(gt.game_id).season != season}
+      coach_gts[k] = win_percentage(coach_gts[k])
+    end
+    coach_gts.delete_if {|k,v| v.nan?}
+    [coach_gts.min_by {|k,v| v}[0], coach_gts.max_by {|k,v| v}[0]]
   end
 end

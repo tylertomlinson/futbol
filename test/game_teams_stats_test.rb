@@ -27,7 +27,7 @@ class GameTeamsStatsTest < Minitest::Test
 
   def test_it_can_find_win_percentage_of_a_team
     hash = @game_teams_collection.game_teams_hash
-    assert_equal 40, @game_teams_stats.team_win_percentage(hash, 26)
+    assert_equal 0.4, @game_teams_stats.team_win_percentage(hash, 26)
   end
 
   def test_it_can_find_winningest_team_id
@@ -86,7 +86,7 @@ class GameTeamsStatsTest < Minitest::Test
   end
 
   def test_it_can_find_teams_with_worst_fans
-    expected = [16, 14, 5, 28, 26, 19]
+    expected = [20, 24, 16, 14, 3, 5, 28, 26, 19]
     assert_equal expected, @game_teams_stats.worst_fans_ids
   end
 
@@ -97,4 +97,5 @@ class GameTeamsStatsTest < Minitest::Test
   def test_fewest_goals_score_by_team_in_a_single_game
     assert_equal 2, @game_teams_stats.fewest_goals_scored(5)
   end
+
 end

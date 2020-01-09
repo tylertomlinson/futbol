@@ -60,4 +60,12 @@ class GameTeamsCollection
         game_team.game_id if game_team.result == result
     end.compact
   end
+
+  def game_teams_by_coach
+    @game_teams_array.reduce({}) do |acc, game_team|
+      acc[game_team.head_coach] << game_team if acc[game_team.head_coach]
+      acc[game_team.head_coach] = [game_team] if acc[game_team.head_coach].nil?
+      acc
+    end
+  end
 end

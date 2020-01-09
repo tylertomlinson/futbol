@@ -39,6 +39,5 @@ class TeamCollection
       "abbreviation" => team.abbreviation,
       "link" => team.link
     }
-
   end
 end
