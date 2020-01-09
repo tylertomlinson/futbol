@@ -54,4 +54,10 @@ class GameTeamsCollection
     end
     away_only
   end
+
+  def game_ids_by_result(team_id, result)
+    @game_teams_by_id[team_id].map do |game_team|
+        game_team.game_id if game_team.result == result
+    end.compact
+  end
 end

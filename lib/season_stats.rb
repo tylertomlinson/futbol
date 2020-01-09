@@ -1,3 +1,5 @@
+require_relative 'game_collection'
+require_relative 'game_teams_collection'
 require_relative 'createable'
 
 class SeasonStats
@@ -41,6 +43,7 @@ class SeasonStats
     end
   end
 
+
   def make_season_game_array(season)
     season_game_array = @game_stats.game_collection.game_hash_from_array_by_attribute(@game_stats.game_collection.games, :season)[season]
 
@@ -52,7 +55,7 @@ class SeasonStats
 
   def seasonal_summary(team_id)
     team_games_by_season = @game_stats.game_collection.from_team(@game_stats.game_collection.game_lists_by_season, team_id)
-    a = team_games_by_season.reduce({}) do |acc, season_games_hash|
+    team_games_by_season.reduce({}) do |acc, season_games_hash|
       games_chunk = @game_stats.game_collection.separate_season_by_types(season_games_hash[1])
       acc[season_games_hash[0]] = {
         regular_season: format_seasonal_summary(games_chunk[:regular_season], team_id),
@@ -81,5 +84,20 @@ class SeasonStats
       total_goals_against: 0,
       average_goals_scored: 0.0,
       average_goals_against: 0.0}
+  end
+
+  def game_score_differentials(team_id, result)
+    games = @gtc.game_ids_by_result(team_id, result)
+    games.map do |game_id|
+      @game_stats.game_collection.games.find{|game| game.game_id == game_id}.difference_between_score
+    end
+  end
+
+  def biggest_team_blowout(team_id)
+    game_score_differentials(team_id, "WIN").max
+  end
+
+  def worst_loss(team_id)
+    game_score_differentials(team_id, "LOSS").max
   end
 end

@@ -6,7 +6,7 @@ require_relative 'team_collection'
 require_relative 'season_stats'
 
 class StatTracker
-  attr_reader :game_path, :game_teams_path
+  attr_reader :game_path, :game_teams_path, :teams_path
 
   def self.from_csv(file_paths)
     game_path = file_paths[:games]
@@ -135,5 +135,25 @@ class StatTracker
 
   def seasonal_summary(team_id)
     @season_stats.seasonal_summary(team_id.to_i)
+  end
+
+  def biggest_team_blowout(team_id)
+    @season_stats.biggest_team_blowout(team_id.to_i)
+  end
+
+  def worst_loss(team_id)
+    @season_stats.worst_loss(team_id.to_i)
+  end
+
+  def team_info(team_id)
+    @team_collection.team_info(team_id.to_i)
+  end
+
+  def biggest_bust(season)
+    @team_collection.team_name_by_id(@game_stats.find_biggest_bust(season))
+  end
+
+  def biggest_surprise(season)
+    @team_collection.team_name_by_id(@game_stats.find_biggest_surprise(season))
   end
 end

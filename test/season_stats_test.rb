@@ -6,14 +6,6 @@ require './lib/season_stats'
 
 class SeasonStatsTest < Minitest::Test
   def setup
-    # @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
-    # @game_teams_collection = GameTeamsCollection.new("./test/fixtures/game_teams_truncated.csv")
-    # @season_stats = SeasonStats.new(@game_collection, @game_teams_collection)
-    #
-    # @total_game_collection = GameCollection.new("./data/games.csv")
-    # @total_game_teams_collection = GameTeamsCollection.new("./data/game_teams.csv")
-    #
-    # @total_season_stats = SeasonStats.new(@total_game_collection, @total_game_teams_collection)
     @game_collection = GameCollection.new("./test/fixtures/games_truncated.csv")
     @game_teams_collection = GameTeamsCollection.new("./test/fixtures/game_teams_truncated.csv")
 
@@ -55,7 +47,15 @@ class SeasonStatsTest < Minitest::Test
     assert_equal 2.36, summary[:average_goals_against]
   end
 
-  # def test_it_can_make_season_game_teams_array
-  #   assert_equal [], @game_collection.make_season_game_array("20132014")
-  # end
+  def test_can_get_game_score_differentials
+    assert_equal [1, 1, 1, 2], @season_stats.game_score_differentials(20, "LOSS")
+  end
+
+  def test_can_get_biggest_team_blowout
+    assert_equal 2, @season_stats.biggest_team_blowout(24)
+  end
+
+  def test_can_get_worst_team_loss
+    assert_equal 2, @season_stats.worst_loss(20)
+  end
 end
