@@ -137,7 +137,7 @@ Fewest Tackles | Team with the lowest amount of tackles in the given season
  </p>
  
  # Contributing
-- Fork repo (git@github.com:tylertomlinson/futbol.git)
+- Fork repo (https://github.com/tylertomlinson/futbol)
 - Create your feature branch (`git checkout -b feature/fooBar`)
 - Commit your changes (`git commit -m 'Add some fooBar'`)
 - Push to the branch (`git push origin feature/fooBar`)
