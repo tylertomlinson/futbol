@@ -42,7 +42,7 @@ gem install rspec
 
 #### Clone repository:
 ```ruby
-git clone git@github.com:mronauli/futbol.git
+git clone git@github.com:tylertomlinson/futbol.git
 ```
 #### Navigate into directory:
 ```ruby
