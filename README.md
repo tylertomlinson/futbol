@@ -1,5 +1,4 @@
 <p align="center">
-  <img width="650" height="350" src="https://i.imgur.com/96qJSAy.png">
 </p>
 
 # Table of Contents
